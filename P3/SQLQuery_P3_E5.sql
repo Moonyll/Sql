@@ -1,0 +1,2 @@
+ALTER TABLE frameworks
+ALTER COLUMN frame NVARCHAR(10); 

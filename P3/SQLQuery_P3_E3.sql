@@ -1,0 +1,1 @@
+EXEC sp_RENAME 'Languages.langage' , 'versions', 'COLUMN'

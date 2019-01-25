@@ -1,0 +1,4 @@
+USE [webDevelopment]
+GO
+SELECT * FROM [dbo].[ide2] WHERE DATE BETWEEN '2010-01-01' AND '2011-12-31'
+GO

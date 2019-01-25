@@ -1,0 +1,339 @@
+corrigé Exercices Sql :
+
+
+EXEC sp_RENAME 'nomDeLaTable.ancienNomDeLaColonne' , 'nouveauNomDeLaColonne', 'COLUMN'
+________________________________________________________________________________________
+Partie 1
+
+-- Ex 1 clic droit sur "bases de données" > "Nouvelles bases de données" > On choisi la taille desirée et on valide.
+-- Ex 2 De même.
+-- Ex 3 CREATE DATABASE frameworks;
+-- Ex 4 CREATE DATABASE students;
+-- Ex 5 clic droit sur la base de données a supprimer, supprimer, puis valider la suppression attention a ne pas faire une mauvaise manip.
+-- Ex 6 DROP DATABASE frameworks; pour supprimer une base de données.
+-- Ex 7 DROP DATABASE students, webDevelopment; pour supprimer les deux base de données en une seule commande.
+_____________________________________________________________________________________________
+PARTIE 2
+
+	Exercice 1
+USE [webDevelopment]
+GO
+CREATE TABLE [dbo].[language]
+(
+	id INT IDENTITY(1,1) PRIMARY KEY,
+	language NVARCHAR(255)
+	);
+
+--Deuxieme façon de faire 
+CREATE TABLE [dbo].[language]
+(
+	id INT IDENTITY(1,1),
+	language NVARCHAR(255),
+	CONSTRAINT language_PK PRIMARY KEY (id)
+	);
+	--Rajouter des crochets pour le nom de Base de donnéé
+	--Nom de table aussi crochets "[dbo].[language]"
+	--Creation d'une table avec deux valeur id , valueur auto-incrémentée de 1 et clé primaire et language valeur
+	--de type nvarchar qui prends en argument un octet. 
+
+	Exercice 2
+CREATE TABLE [dbo].[tools] (
+	id INT IDENTITY(1,1) PRIMARY KEY,
+	tool NVARCHAR(255)
+);
+	--Tous les caractères spéciaux sont autorisés par NVARCHAR contrairement à VARCHAR 
+	--NVARCHAR pèse plus lourd qu'un VARCHAR
+	--NVARCHAR est limité à 4000 caractères contrairement à VARCHAR qui est de memoire et à verifier 255. 
+
+	Exercice 3
+CREATE TABLE [dbo].[Frameworks] (
+	id INT IDENTITY(1,1) PRIMARY KEY,
+	name NVARCHAR(255)
+);
+
+	Exercice 4
+CREATE TABLE [dbo].[libraries] (
+	id INT IDENTITY(1,1) PRIMARY KEY,
+	library NVARCHAR(255)
+);
+
+	Exercice 5
+CREATE TABLE [dbo].[ide] (
+	id INT IDENTITY(1,1) PRIMARY KEY,
+	ideName NVARCHAR(255)
+);
+
+------------------------------
+
+Base de données 
+*webDevelopment
+**Tables clic droit tables > remplir les infos  
+
+
+	Exercice 6
+CREATE TABLE [dbo].[Browsers] (
+	id INT IDENTITY(1,1) PRIMARY KEY,
+	name NVARCHAR(255)
+);
+
+---------------------------------
+
+Base de données 
+*webDevelopment
+**Tables clic droit tables > remplir les infos  
+
+
+	Exercice 7
+USE [webDevelopment]
+GO
+DROP TABLE [dbo].[tools] 
+	--Supprimer la table tools. 
+Exercice 8
+USE [webDevelopment]
+GO
+DROP TABLE [dbo].[librairies] 
+
+	Exercice 9
+Base de données 
+*webDevelopment
+**Tables
+***clic droit sur la table ide > supprimer 
+
+		TP 
+Base de données > clic droit créer base de donnée codex 
+*codex
+**Tables > Créer table
+*** Remplir les colonnes > Enregistrer le nom
+___________________________________________________________________________________________
+PARTIE 3
+
+EX1
+
+USE [webDevelopment]
+GO
+ALTER TABLE [dbo].[languages] ADD versions NVARCHAR(255);
+
+
+EX3
+
+USE [webDevelopment]
+GO
+EXEC sp_rename 'languages.versions', 'version', 'COLUMN';
+
+EX5
+
+USE [webDevelopment]
+GO
+ALTER TABLE [dbo].[frameworks] ALTER COLUMN version NVARCHAR(10);
+
+
+
+TP
+
+USE [codex]
+GO
+ALTER TABLE [dbo].[clients] DROP COLUMN secondPhoneNumber;
+EXEC sp_rename 'clients.firstPhoneNumber', 'phoneNumber', 'COLUMN';
+ALTER TABLE [dbo].[clients] ALTER COLUMN phoneNumber NVARCHAR(255);
+ALTER TABLE [dbo].[clients] ADD zipCode, city NVARCHAR(255);
+
+
+
+____________________________________________________________________________________________
+PARTIE 4
+
+CORRECTION 4.1:
+
+USE [webDevelopment]
+GO
+INSERT INTO [dbo].[languages] (language,version) VALUES
+        ('JavaScript','5'),
+		('PHP','5.2'),
+		('PHP','5.4'),
+		('HTML','5.1'),
+		('JavaScript','6'),
+		('JavaScript','7'),
+		('JavaScript','8'),
+		('PHP','7');
+---------------------------------------------------------------
+
+4.2) Pour insérer des données dans la table 'frameworks' via l'interface graphique:
+     Allez sur la table 'frameworks' puis clic droit => modifier les 200 lignes du hauts et remplir les données suivantes
+     -Symfony version 2.8
+
+     -Symfony version 3
+     -
+Jquery version 1.6
+
+     -Jquery version 2.10
+___________________________________________________________________________________________
+PARTIE 5
+
+ok Fait
+
+____________________________________________________________________________________________
+PARTIE 6
+
+Ex1
+
+USE [webDevelopment]
+GO
+SELECT [id],[framework],[version]
+FROM [dbo].[frameworks] WHERE [version] LIKE '2.%';
+
+
+EX2
+
+USE [webDevelopment]
+GO
+SELECT [id],[framework],[version] 
+FROM [dbo].[frameworks] WHERE [id] IN ('1','3');
+
+
+EX3
+
+USE [webDevelopment]
+GO
+SELECT [id],[name],[version],[date] 
+FROM [dbo].[ide] WHERE [date] BETWEEN '2010-01-01' AND '2011-12-31'
+
+_____________________________________________________________________________________________
+PARTIE 7
+
+EXERCICE 1
+USE [webDevelopment] 
+GO
+DELETE FROM [dbo].[languages] WHERE [language] = 'HTML';
+
+	EXERCICE 2
+USE [webDevelopment]
+GO 
+UPDATE [dbo].[Frameworks]
+SET [framework] = 'Symfony2'
+WHERE [framework] = 'Symfony'; 
+
+--UPDATE [dbo].[Frameworks]
+--SET  [framework] = REPLACE ([framework], 'Symfony', 'Symfony2');
+
+	EXERCICE 3
+USE [webDevelopment]
+GO 
+UPDATE [dbo].[languages]
+SET [version] = 5.1
+WHERE [language] = 'JavaScript' AND [version] = 5; 
+
+-- REPLACE([version], 5, 5.1)
+-- WHERE [language] = 'JavaScript';
+
+_______________________________________________________________________________________________
+--SQL - Partie 8 :
+ Les jointures
+
+
+
+
+--Ex01 :
+
+
+/*
+
+
+USE [development]
+
+GO
+
+SELECT [dbo].[languages].[name], [dbo].[frameworks].[name]
+FROM [dbo].[frameworks]
+FULL OUTER JOIN [dbo].[languages] ON [dbo].[frameworks].[languagesId]=[dbo].[languages].[id]
+ORDER BY [dbo].[languages].[name];
+
+USE [development]
+GO
+SELECT 
+	[dbo].[languages].[name] AS [language], 
+	[dbo].[frameworks].[name] AS [framework]
+FROM
+	[dbo].[languages] 
+LEFT JOIN
+	[dbo].[frameworks] ON [dbo].[frameworks].[languagesId]=[dbo].[languages].[id]
+ORDER BY
+	[dbo].[languages].[name];
+
+
+*/
+
+/*
+
+
+--Ex02 :
+
+
+
+USE [development]
+
+GO
+
+SELECT 
+	[lg].[name] AS [language], -- AS = Alias
+	[fw].[name] AS [framework]
+FROM
+	[dbo].[languages] AS [lg] -- le logiciel commence par lire le FROM
+INNER JOIN
+	[dbo].[frameworks] AS [fw] ON [fw].[languagesId]=[lg].[id] -- Alias fw pour frameworks
+ORDER BY
+	[lg].[name];
+
+
+*/
+
+
+/*
+
+
+--Ex03 :
+
+
+
+USE [development]
+
+GO
+
+
+SELECT
+	[dbo].[languages].[name],
+	COUNT([dbo].[frameworks].[name]) AS [result] -- cration d'une nouvelle colonne o le rsultat sera affich (Alias)
+FROM
+	[dbo].[languages]
+LEFT JOIN
+	[dbo].[frameworks] ON [dbo].[languages].[id]=[dbo].[frameworks].[languagesId]
+GROUP BY
+	[dbo].[languages].[name]
+GO
+
+
+*/
+
+
+
+--Ex04 :
+
+ 
+
+USE
+	[development]
+
+GO
+
+SELECT 
+	[dbo].[languages].[name],
+	COUNT([dbo].[frameworks].[name]) AS result -- cration d'une nouvelle colonne o le rsultat sera affich
+FROM
+	[dbo].[languages]
+INNER JOIN
+	[dbo].[frameworks] ON [dbo].[languages].[id]=[dbo].[frameworks].[languagesId]
+GROUP BY
+	[dbo].[languages].[name]
+HAVING
+	COUNT([dbo].[frameworks].[name]) >= 3
+GO
+
