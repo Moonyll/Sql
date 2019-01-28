@@ -337,3 +337,77 @@ HAVING
 	COUNT([dbo].[frameworks].[name]) >= 3
 GO
 
+
+----------------------------------------------------------------------------------------------
+PARTIE 09
+
+USE [france]
+GO
+/*Exercice 1
+SELECT [region], [prefecture], [nom_region] FROM [dbo].[regions];*/
+/*Exercie 2
+SELECT [nom_dep] FROM [dbo].[departements] ORDER BY [nom_dep] ASC;*/
+/*Exercice 3
+SELECT [ville] FROM [dbo].[villes] WHERE [dep] ='60' ORDER BY [cp];*/
+/*Exercie 4
+SELECT TOP 3 [ville] FROM [dbo].[villes] WHERE [cp] ='60400' ORDER BY [ville] ASC;*/
+/*Exercie 5
+SELECT [ville] FROM [dbo].[villes] WHERE [ville] LIKE '%saint%';*/
+/*Exercice 6
+SELECT
+	[departements].[nom_dep],
+	COUNT([ville]) AS [NB_OF_TOWNS]
+FROM [dbo].[villes]
+LEFT JOIN
+	[dbo].[departements] ON [dbo].[departements].[dep] = [dbo].[villes].[dep]
+GROUP BY
+	[nom_dep];*/
+/*Exercie 7
+SELECT
+	[ville]
+FROM
+	[dbo].[villes]
+INNER JOIN
+	[dbo].[regions] ON [dbo].[villes].[region] = [dbo].[regions].[region]
+WHERE
+	[dbo].[regions].[nom_region] = 'Picardie';*/
+/*Exercie 8
+SELECT
+    [regions].[nom_region] AS [REGION_DEPARTEMENT] ,
+    COUNT([villes].[ville]) AS [NB_VILLES]
+FROM
+    [dbo].[departements]
+LEFT JOIN [dbo].[villes] ON [departements].[dep] = [villes].[dep] 
+LEFT JOIN [dbo].[regions] ON [departements].[region]= [regions].[region]
+GROUP BY [regions].[nom_region]
+UNION ALL
+SELECT
+    [departements].[nom_dep] AS [REGION_DEPARTEMENT] ,
+    COUNT([villes].[ville]) AS [NB_VILLES]
+FROM
+    [dbo].[departements]
+LEFT JOIN [dbo].[villes] ON [departements].[dep] = [villes].[dep]
+LEFT JOIN [dbo].[regions] ON [departements].[region]= [regions].[region]
+GROUP BY [departements].[nom_dep];*/
+/*Exercice 8V2
+SELECT
+	[dbo].[regions].[nom_region] AS [Region_et_Departement],
+	COUNT([dbo].[villes].[id]) AS [Nombre_de_Villes]
+FROM
+	[dbo].[regions]
+FULL JOIN
+	[villes] ON ([dbo].[villes].[region] = [dbo].[regions].[region])
+GROUP BY
+	[dbo].[regions].[nom_region]
+UNION ALL
+SELECT
+	[dbo].[departements].[nom_dep],
+	COUNT([dbo].[villes].[id]) AS [Nombre_de_Villes]
+FROM
+	[dbo].[departements]
+FULL JOIN
+	[villes] ON ([dbo].[villes].[dep] = [dbo].[departements].[dep])
+GROUP BY
+	[dbo].[departements].[nom_dep]
+ORDER BY
+	[Region_et_Departement];*/
